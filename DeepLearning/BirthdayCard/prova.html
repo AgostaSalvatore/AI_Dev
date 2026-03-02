@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Birthday Card Factoradady</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600;800&family=Bungee&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --primary-hover: #9b59b6;
+            --secondary: #2f3542;
+            --paper: #fffef0;
+            --accent: #f1c40f;
+            --bg-color: linear-gradient(135deg, #b06ab3 0%, #4568dc 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--secondary);
+        }
+
+        /* Fun Page Title */
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .page-title {
+            font-family: 'Bungee', cursive;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 4px 4px 0px var(--accent);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .page-subtitle {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        /* Left Side: Form */
+        .controls {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #a4b0be;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f1f2f6;
+            border-radius: 12px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: var(--primary-hover);
+        }
+
+        .lucky-btn {
+            margin-top: 15px;
+            background: var(--accent);
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+            color: #2f3542;
+        }
+
+        .lucky-btn:hover {
+            background: #f39c12;
+            color: #2f3542;
+        }
+
+        /* Right Side: The Card Stack */
+        .card-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .birthday-card {
+            background: var(--paper);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            position: relative;
+            min-height: 250px;
+            /* Card Fold effect */
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.01) 3%, transparent 8%),
+                linear-gradient(to bottom, #fffef0 0%, #fdfbf7 100%);
+            border-left: 2px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            animation: slideIn 0.5s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .birthday-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .birthday-card::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 30px;
+            width: 2px;
+            background: rgba(142, 68, 173, 0.2);
+            border-radius: 2px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-text {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            line-height: 1.5;
+            color: #2f3542;
+            margin: 0 0 0 20px;
+            white-space: pre-line;
+            /* Keeps the line breaks */
+        }
+
+        .card-footer {
+            margin-top: 40px;
+            margin-left: 20px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 2px dashed rgba(0, 0, 0, 0.05);
+            padding-top: 20px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: none;
+            width: auto;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Empty state styling */
+        .empty-state {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 50px;
+            border: 3px dashed rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                position: static;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1 class="page-title">🎂 CARD-O-MATIC 3000</h1>
+        <p class="page-subtitle">The World's Fastest (And Rudest) Birthday Card Generator</p>
+    </header>
+
+    <div class="main-layout">
+        <div class="controls">
+            <div class="input-group">
+                <label>Who is it for?</label>
+                <input type="text" id="name" placeholder="Name of the lucky victim">
+            </div>
+            <div class="input-group">
+                <label>How old are they?</label>
+                <input type="number" id="age" placeholder="Age (be honest)">
+            </div>
+            <div class="input-group">
+                <label>What is their hobby?</label>
+                <input type="text" id="hobby" placeholder="e.g. Golf, Knitting, Napping">
+            </div>
+            <div class="input-group">
+                <label>Add an adjective</label>
+                <input type="text" id="adjective" placeholder="e.g. Grumpy, Awesome, Lazy">
+            </div>
+            <button onclick="addCard()">Create Card ✨</button>
+            <button class="lucky-btn" onclick="feelingLucky()">I'm Feeling Lucky 🎲</button>
+        </div>
+
+        <div class="card-stack" id="cardStack">
+            <div class="empty-state" id="emptyState">
+                Your generated cards will stack up right here!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function feelingLucky() {
+            const names = ["Bob", "Karen", "Dave", "Susan", "Chad", "Brenda", "Kevin", "Linda"];
+            const hobbies = ["Golf", "Knitting", "Napping", "Complaining", "Watching TV", "Bingo", "Gardening", "Yelling at clouds"];
+            const adjectives = ["Grumpy", "Awesome", "Lazy", "Wrinkly", "Fabulous", "Crusty", "Sleepy", "Ancient"];
+
+            document.getElementById('name').value = names[Math.floor(Math.random() * names.length)];
+            document.getElementById('age').value = Math.floor(Math.random() * 60) + 30; // 30 to 89
+            document.getElementById('hobby').value = hobbies[Math.floor(Math.random() * hobbies.length)];
+            document.getElementById('adjective').value = adjectives[Math.floor(Math.random() * adjectives.length)];
+        }
+
+        function addCard() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const hobby = document.getElementById('hobby').value;
+            const adjective = document.getElementById('adjective').value;
+
+            if (!name || !age || !hobby || !adjective) {
+                alert("Fill in all the boxes, or the card will be blank (and that's not funny)!");
+                return;
+            }
+
+            // Remove the empty state message if it exists
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) emptyState.remove();
+
+            const templates = [
+                `Hey ${name},\nHappy ${age}th Birthday! You're finally at that age where your idea of a 'wild night' is staying up late enough to see the end of a ${adjective} movie.\n\nNow put down the ${hobby} and go have a nap—you've earned it!`,
+                `Happy Birthday ${name}!\n${age} years old... wow. You’re officially at the age where your back goes out more than you do.\n\nMaybe try doing ${hobby} in a ${adjective} chair today?`,
+                `To ${name},\nCongrats on turning ${age}! They say age is just a number, but in your case, it's a ${adjective} high one.\n\nIf you spent as much time aging as you do on ${hobby}, you'd be... well, exactly this old.`,
+                `Happy Birthday!\n${age} is a ${adjective} age, ${name}. You're old enough to know better, but still young enough to blame your interest in ${hobby} on a mid-life crisis!`
+            ];
+
+            const randomJoke = templates[Math.floor(Math.random() * templates.length)];
+
+            // Create the new card element
+            const newCard = document.createElement('div');
+            newCard.className = 'birthday-card';
+
+            const cardContent = `${randomJoke}\n\nBest wishes,\nMe`;
+
+            newCard.innerHTML = `
+            <p class="card-text">${randomJoke}</p>
+            <div class="card-footer">
+                <div>Best wishes,<br>Me</div>
+                <button class="copy-btn" onclick="copyToClipboard(this, \`${cardContent.replace(/`/g, '\\`')}\`)">Copy 📋</button>
+            </div>
+        `;
+
+            // Prepend (add to top) the card to the stack
+            const stack = document.getElementById('cardStack');
+            stack.insertBefore(newCard, stack.firstChild);
+
+            // Clear the inputs for the next one
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('hobby').value = '';
+            document.getElementById('adjective').value = '';
+        }
+
+        async function copyToClipboard(buttonElement, textToCopy) {
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                const originalText = buttonElement.innerHTML;
+                buttonElement.innerHTML = 'Copied! ✅';
+                buttonElement.style.background = 'var(--primary)';
+                buttonElement.style.color = 'white';
+
+                setTimeout(() => {
+                    buttonElement.innerHTML = originalText;
+                    buttonElement.style.background = 'transparent';
+                    buttonElement.style.color = 'var(--primary)';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text. Please try again.');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
