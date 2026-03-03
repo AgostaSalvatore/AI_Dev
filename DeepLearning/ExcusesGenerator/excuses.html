@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credible Excuses | AI Alibi Generator</title>
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --accent: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid #334155;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        p.subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 0.75rem;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 0.9rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-generate {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-lucky {
+            background-color: #334155;
+            color: #cbd5e1;
+        }
+
+        #output {
+            margin-top: 2rem;
+            padding: 1.2rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 1rem;
+            border: 1px dashed var(--primary);
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .copy-hint {
+            font-size: 0.7rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: block;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🤥 Credible Excuses</h1>
+        <p class="subtitle">AI-assisted alibis for the socially exhausted.</p>
+
+        <div class="form-group">
+            <label>1. What are you skipping?</label>
+            <input type="text" id="event" placeholder="e.g. Monday Status Meeting">
+        </div>
+
+        <div class="form-group">
+            <label>2. Who is the recipient?</label>
+            <input type="text" id="recipient" placeholder="e.g. Boss, Sarah, The Group Chat">
+        </div>
+
+        <div class="form-group">
+            <label>3. Excuse Theme</label>
+            <select id="theme">
+                <option value="tech">Tech Meltdown</option>
+                <option value="health">Sudden "Food Poisoning"</option>
+                <option value="domestic">Home Emergency</option>
+                <option value="transit">Transit Nightmare</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>4. Drama Intensity (1-10)</label>
+            <input type="range" id="drama" min="1" max="10" value="5" style="accent-color: var(--primary);">
+        </div>
+
+        <div class="form-group">
+            <label>5. A grain of truth</label>
+            <input type="text" id="truth" placeholder="e.g. it's raining / battery at 1%">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-lucky" onclick="fillLucky()">I'm Feeling Lucky 🎲</button>
+            <button class="btn-generate" onclick="generateExcuse()">Generate Alibi ✨</button>
+        </div>
+
+        <div id="output">
+            <span class="copy-hint">PROPOSED MESSAGE:</span>
+            <p id="excuseText" style="line-height: 1.5; margin: 0;"></p>
+        </div>
+    </div>
+
+    <script>
+        const randomData = {
+            events: ["The Quarterly Review", "Gym session", "Dinner at my in-laws", "High school reunion", "Padel match"],
+            recipients: ["The Boss", "Mom", "My Coach", "The Team", "The Organizer"],
+            truths: ["my Wi-Fi is completely dead", "there's a massive power outage", "my phone is at 2%", "the weather is insane"]
+        };
+
+        function fillLucky() {
+            document.getElementById('event').value = randomData.events[Math.floor(Math.random() * randomData.events.length)];
+            document.getElementById('recipient').value = randomData.recipients[Math.floor(Math.random() * randomData.recipients.length)];
+            document.getElementById('truth').value = randomData.truths[Math.floor(Math.random() * randomData.truths.length)];
+            document.getElementById('drama').value = Math.floor(Math.random() * 10) + 1;
+
+            const select = document.getElementById('theme');
+            select.selectedIndex = Math.floor(Math.random() * select.options.length);
+        }
+
+        function generateExcuse() {
+            const ev = document.getElementById('event').value || "the event";
+            const dest = document.getElementById('recipient').value || "everyone";
+            const theme = document.getElementById('theme').value;
+            const drama = parseInt(document.getElementById('drama').value);
+            const truth = document.getElementById('truth').value || "some unexpected issues";
+
+            const outputDiv = document.getElementById('output');
+            const textP = document.getElementById('excuseText');
+
+            // Pseudo-AI Generative Logic
+            let opening = "";
+            if (drama < 4) opening = `Hey ${dest}, I'm afraid I have to skip ${ev}. `;
+            else if (drama < 8) opening = `So sorry ${dest}, but I'm not going to make it to ${ev}. I'm feeling terrible about it. `;
+            else opening = `Total disaster, ${dest}! I'm stuck in a nightmare scenario and I definitely can't join ${ev}. `;
+
+            const stories = {
+                tech: `My laptop just went into a 'critical update' loop of death, and since ${truth}, I'm completely offline.`,
+                health: `I think that lunch I had was a mistake. My stomach is in full revolt, and ${truth} is making it worse.`,
+                domestic: `A pipe just burst in my kitchen! I'm currently wading through an inch of water, and ${truth}.`,
+                transit: `I'm trapped in the mother of all traffic jams. The GPS says '99+ minutes' and ${truth}.`
+            };
+
+            const closing = drama > 7 ? " I'm so sorry for the short notice, I'll make it up to you!" : " Catch you later.";
+
+            textP.innerText = opening + stories[theme] + closing;
+            outputDiv.style.display = 'block';
+        }
+    </script>
+
+</body>
+
+</html>
